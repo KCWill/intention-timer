@@ -27,9 +27,6 @@ minIn.addEventListener("keypress", preventLetters);
 secIn.addEventListener("keypress", preventLetters);
 
 function preventLetters(e) {
-  // 0 for null values
-  // 8 for backspace
-  // 48-57 for 0-9 numbers
   if ((e.which != 8 && e.which != 0 && e.which < 48) || e.which > 57) {
     e.preventDefault();
   }
@@ -40,14 +37,12 @@ function formatTimeString(sec) {
   var hours = Math.floor(sec_num / 3600);
   var minutes = Math.floor((sec_num - hours * 3600) / 60);
   var seconds = sec_num - hours * 3600 - minutes * 60;
-
   if (seconds < 10) {
     seconds = "0" + seconds;
   }
   if (minutes < 10 && hours > 0) {
     minutes = "0" + minutes;
   }
-
   if (hours > 0) {
     return hours + ":" + minutes + ":" + seconds;
   } else if (seconds >= 0) {
@@ -131,8 +126,7 @@ function timer(sec) {
   clearInterval(globalTimer);
   timerSecondsLeft = Number(sec);
   document.getElementById("done").innerHTML = formatTimeString(
-    timerSecondsLeft
-  );
+    timerSecondsLeft);
   globalTimer = setInterval(function() {
     timerSecondsLeft--;
     if (timerSecondsLeft < 0) {
@@ -163,10 +157,20 @@ function upperFirstLetter(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-function newCard() {
+function ridActivityMessage() {
   if (document.getElementById("noActivities")) {
     document.getElementById("noActivities").remove();
   }
+}
+
+function hideTimerPage() {
+  timerPage.classList.add("hidden");
+  completePage.classList.remove("hidden");
+  document.getElementById("logBut").classList.add("hidden");
+}
+
+function newCard() {
+  ridActivityMessage();
   currentActivity.hasLogged = true;
   var timeString = getCardTimeString(currentActivity.time);
   var congrats = document.getElementById("congrats");
@@ -181,10 +185,8 @@ function newCard() {
       <p class="description">${currentActivity.description}</p>
     </section>
   `;
-  timerPage.classList.add("hidden");
-  completePage.classList.remove("hidden");
-  document.getElementById("logBut").classList.add("hidden");
   activities[currentActivity.id] = currentActivity;
+  hideTimerPage()
 }
 
 function showHome() {
@@ -234,7 +236,6 @@ function getCardTimeString(seconds) {
   time = time.split(":").reverse();
   var timeString = "";
   if (time[0] != 0 && time[0] != undefined) {
-    // weak matching because time[0] is a string
     timeString = `${time[0]} SECS`;
   }
   if (time[1] != 0 && time[1] != undefined) {
