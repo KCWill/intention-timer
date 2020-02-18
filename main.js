@@ -1,11 +1,7 @@
-/*jshint esversion: 6 */
-
 var globalTimer = null;
-
 var study = document.querySelector("#study");
 var meditate = document.querySelector("#meditate");
 var exercise = document.querySelector("#exercise");
-
 var minIn = document.getElementById("minIn");
 var secIn = document.getElementById("secIn");
 var desc = document.getElementById("description");
@@ -15,7 +11,6 @@ var completePage = document.getElementById("completePage");
 var currentActivity;
 var aside = document.querySelector("aside");
 var timerSecondsLeft = 0;
-
 var activities = [];
 
 study.addEventListener("click", function() {
@@ -30,23 +25,6 @@ exercise.addEventListener("click", function() {
 
 minIn.addEventListener("keypress", preventLetters);
 secIn.addEventListener("keypress", preventLetters);
-
-class Activity {
-  constructor(category, description, seconds) {
-    this.category = category;
-    this.description = description;
-    this.time = seconds;
-    this.favorite = false;
-    this.id = this.nextID();
-  }
-
-  nextID() {
-    if (Activity.nextID === undefined) {
-      Activity.nextID = 0;
-    }
-    return Activity.nextID++;
-  }
-}
 
 function preventLetters(e) {
   // 0 for null values
